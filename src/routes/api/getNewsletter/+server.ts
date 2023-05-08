@@ -53,7 +53,7 @@ export let GET: RequestHandler = async ({getClientAddress, url}) => {
 
         data.stories.forEach(e => {
             e.url = e.url.trim().replace('utm_source=tldrnewsletter', '').replace(/\?$/, '')
-            let infoMatch = e.title.match(/ \((.+)\)$/)
+            let infoMatch = e.title.match(/ \((.+?)\)$/)
             if (infoMatch) {
                 e.info = infoMatch[1]
                 e.title = e.title.replace(infoMatch[0], '')
