@@ -52,7 +52,7 @@ export let GET: RequestHandler = async ({getClientAddress, url}) => {
         let data = res.ssr_data.props.pageProps as RawNewsletter
 
         data.stories.forEach(e => {
-            e.url = e.url.trim().replace('utm_source=tldrnewsletter', '').replace(/\?$/, '')
+            e.url = e.url.trim().replace(/utm_source=[^&]+/, '').replace(/\?$/, '')
             let infoMatch = e.title.match(/ \((.+?)\)$/)
             if (infoMatch) {
                 e.info = infoMatch[1]
