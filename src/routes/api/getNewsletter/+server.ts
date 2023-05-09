@@ -52,7 +52,7 @@ export let GET: RequestHandler = async ({getClientAddress, url}) => {
         let data = res.ssr_data.props.pageProps as RawNewsletter
 
         data.stories.forEach(e => {
-            e.url = e.url.trim().replace(/utm_source=[^&]+/, '').replace(/\?$/, '')
+            e.url = e.url.trim().replace(/&*utm_source=[^&]+/, '').replace(/\?$/, '')
             let infoMatch = e.title.match(/ \((.+?)\)$/)
             if (infoMatch) {
                 e.info = infoMatch[1]
@@ -69,7 +69,8 @@ export let GET: RequestHandler = async ({getClientAddress, url}) => {
         let currentCat = '_'
 
         data.stories
-            .filter(e => !e.category.includes('sponsor'))
+            .filter(e => !e.category.toLowerCase().includes('sponsor') &&
+                !e.info.toLowerCase().includes('sponsor'))
             .sort((a, b) => a.id - b.id)
             .forEach(e => {
                 if (e.category !== currentCat) {
